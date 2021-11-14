@@ -1,52 +1,50 @@
-import React,{ Component } from 'react';
-import {Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle,Button} from 'reactstrap';
-class Menu extends Component{
-    constructor(props){
-        super(props);
+import React from 'react';
+import {Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle,Button, Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import DishDetail from './DishdetailComponent';
+import {Link} from 'react-router-dom';
 
-    }
     
-    renderDish(dish, listDish){
-        if(dish!=null){
-            let data =listDish.filter(el=> dish===el.id)[0]
-            return (
-                <Card>
-                <CardImg width="10%" src={data?.image} alt={data?.name}/>
-                    <CardBody>
-                        <CardTitle>{data?.name}</CardTitle>
-                        <CardText>{data?.description}</CardText>
-                    </CardBody>
-                </Card>
-            )
-            }else{
-                return (
-                    <div></div>
-                )
-            }
+    function RenderMenuItem({dish, onClick}){
+        return(
+            <Card>
+                <Link to={`/menu/${dish.id}`}>
+
+                <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                <CardImgOverlay>
+                <CardTitle>{dish.name}</CardTitle>
+                </CardImgOverlay>
+                </Link>
+            </Card>
+        )
     }
-    render(){
-        const menu=this.props.dishes.map((dish)=>{
+    function Menu(props){
+        const menu = props.dishes.map((dish)=>{
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <Button><Card onClick={()=>{this.props.onClickTest(dish.id)}}>
-                            <CardImg width="100%" src={dish.image} alt={dish.name}/>
-                        <CardImgOverlay>
-                            <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    </Card></Button>
+                    <RenderMenuItem dish={dish}  />   
                 </div>
             )
         });
         return( 
             <div className="container">
                 <div className="row">
+                    <Breadcrumb>
+                    <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Menu</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                <div className="col-12">
+                    <h3>Menu</h3>
+                    <hr/>
+                </div>
+                <div className="row">
                         {menu}
                 </div>
                 <div className="row">
-                    {this.renderDish(this.props.selectedDish,this.props.dishes)}
+                <DishDetail />
                 </div>
             </div>
         );
     }
-}
+        
 export default Menu;
