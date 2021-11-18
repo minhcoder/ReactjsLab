@@ -29,7 +29,7 @@ function RenderComments({comments}){
                                 <p>{comment.comment}</p>
                                 <p>{comment.rating}</p>
                                 <p>{comment.author}</p>
-                                {/* <p>{comment.author},{new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.updateAt)))}</p> */}
+                                {/* <p>{comment.author},{new Intl.DateTimeFormat({year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.updateAt)))}</p>  */}
                             </li>
                     )
                 })}

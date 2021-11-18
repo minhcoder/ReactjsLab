@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
-function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
+import { LEADERS } from '../share/leaders';
+function About(props){
+    const leaders = props && props.leaders && props.leaders.map((leader) => {
         return (
             <p>Leader {leader.name}</p>
         );
@@ -73,5 +72,4 @@ function About(props) {
         </div>
     );
 }
-
 export default About;    
