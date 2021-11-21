@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import React, { Component } from "react";
+import {Card, CardBody, CardImg,Jumbotron, CardImgOverlay, CardText, CardTitle,Breadcrumb,BreadcrumbItem,Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 function RenderDish({dish}){
@@ -17,6 +17,58 @@ function RenderDish({dish}){
         </div>
     )
 }
+class CommentForm extends Component{
+    constructor(props){
+        super(props);
+        
+        this.state={
+            isModelOpen: false,
+        }
+        this.toggleModal=this.toggleModal.bind(this);
+        this.handleComment=this.handleComment.bind(this);
+    }
+    toggleModal(){
+        this.setState({
+            isModelOpen:!this.state.isModelOpen,
+        })
+    }
+    handleComment(event){
+        this.toggleModal();
+        alert("Rating:"+this.rating.value+"Your Name "+this.yourname.value+"Your Comment"+this.yourcomment.value);
+        event.preventDefault();
+    }
+    render(){
+        return(
+            <Modal isOpen={this.state.isModelOpen} toggle={this.toggleModal}>
+                <ModalHeader toggle={this.toggleModal}>Comment</ModalHeader>
+                <ModalBody>
+                    <Form onsubmit={this.handleComment}>
+                        <FormGroup>
+                            <Label htmlFor="rating">Rating</Label>
+                            <Input type="select" id="rating" name="rating" innerRef={(input)=>this.rating=input}>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </Input>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="yourname">Your Name</Label>
+                            <Input type="text" id="yourname" name="yourname" innerRef={(input)=>this.yourname=input}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="yourcomment">Comment</Label>
+                            <Input type="textarea" id="yourcomment" name="yourcomment" innerRef={(input)=>this.yourcomment=input}/>
+                        </FormGroup>
+                        <Button type="submit" value="submit" className="bg-primary" color="primary">Submit</Button>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        )
+    }
+
+}
 function RenderComments({comments}){
     if (comments != null){
         return(
@@ -29,11 +81,18 @@ function RenderComments({comments}){
                                 <p>{comment.comment}</p>
                                 <p>{comment.rating}</p>
                                 <p>{comment.author}</p>
-                                {/* <p>{comment.author},{new Intl.DateTimeFormat({year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.updateAt)))}</p>  */}
                             </li>
                     )
                 })}
-                </ul>     
+                </ul>
+                <div className="ml-auto">
+                <Button outline>
+                    <span className="fa fa-comment fa-lg"></span> Submit Comment
+                </Button>
+            </div>
+                <Jumbotron>
+                <CommentForm/>
+            </Jumbotron>
             </div>
         );
     }
@@ -42,6 +101,8 @@ function RenderComments({comments}){
             <div></div>
             )       
 }
+
+
 function DishDetail(props){
     if(props.dish!=null){
         return(
@@ -62,6 +123,8 @@ function DishDetail(props){
                 <RenderComments comments={props.comment}/>
             </div>
             </div>
+
+            
         )
     }else{
         return(

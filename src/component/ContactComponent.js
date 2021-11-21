@@ -18,8 +18,6 @@ class Contact extends Component {
         console.log("Current State is:"+JSON.stringify(values));
         alert("Current state is:"+JSON.stringify(values));
     }
-    
-
     render(){
     return(
         <div className="container">
@@ -158,7 +156,7 @@ class Contact extends Component {
                         </Row>
                         <Row className="form-group">
                             <Col md={{size:10,offset:2}}>
-                                <Button type="submit" color="primary">Send Your Feadback</Button>
+                                <Button type="submit" value="submit" color="primary">Send Your Feadback</Button>
                             </Col>
                         </Row>
                     </LocalForm>
