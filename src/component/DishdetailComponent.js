@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Card, CardBody, CardImg,Jumbotron, CardImgOverlay, CardText, CardTitle,Breadcrumb,BreadcrumbItem,Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {Link} from 'react-router-dom';
-
+import { Loading } from "./LoadingComponent";
 function RenderDish({dish}){
     return(
         <div className="col-12 col-md-5 m-1">
@@ -32,13 +32,17 @@ class CommentForm extends Component{
             isModelOpen:!this.state.isModelOpen,
         })
     }
-    handleComment(event){
+    handleComment(value){
         this.toggleModal();
-        alert("Rating:"+this.rating.value+"Your Name "+this.yourname.value+"Your Comment"+this.yourcomment.value);
-        event.preventDefault();
+        this.props.addComment(this.props.dishId, value.rating,value.author, value.comment)
+        value.preventDefault();
     }
     render(){
         return(
+            <React.Fragment>
+                <Button outline onClick={this.toggleModal}>
+                    <span className="fa fa-comments fa-lg"></span> Submit Comment  
+                </Button>
             <Modal isOpen={this.state.isModelOpen} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Comment</ModalHeader>
                 <ModalBody>
@@ -65,11 +69,12 @@ class CommentForm extends Component{
                     </Form>
                 </ModalBody>
             </Modal>
+            </React.Fragment>
         )
     }
 
 }
-function RenderComments({comments}){
+function RenderComments({comments},addComment, dishId){
     if (comments != null){
         return(
             <div className="col12 col-md-5 m-1">
@@ -86,13 +91,8 @@ function RenderComments({comments}){
                 })}
                 </ul>
                 <div className="ml-auto">
-                <Button outline>
-                    <span className="fa fa-comment fa-lg"></span> Submit Comment
-                </Button>
             </div>
-                <Jumbotron>
-                <CommentForm/>
-            </Jumbotron>
+                <CommentForm dishId={dishId} addComment={addComment}/>
             </div>
         );
     }
@@ -104,7 +104,23 @@ function RenderComments({comments}){
 
 
 function DishDetail(props){
-    if(props.dish!=null){
+    if(props.isLoading){
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading/>
+                </div>
+            </div>
+        )
+    }else if(props.errMess){
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        )
+    }else if(props.dish!=null){
         return(
             <div className="container">
             <div className="row">
@@ -120,7 +136,9 @@ function DishDetail(props){
             </div>
             <div className="row">
                 <RenderDish dish={props.dish}/>
-                <RenderComments comments={props.comment}/>
+                <RenderComments comments={props.comment}
+                addComment={props.addComment}
+                dishId={props.dish.id}/>
             </div>
             </div>
 
