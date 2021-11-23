@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import {Card, CardBody, CardImg,Jumbotron, CardImgOverlay, CardText, CardTitle,Breadcrumb,BreadcrumbItem,Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../share/baseUrl";
 function RenderDish({dish}){
     return(
         <div className="col-12 col-md-5 m-1">
             <Card>
-                <CardImg src={dish.image} alt={dish.name}/>
+                <CardImg src={baseUrl+dish.image} alt={dish.name}/>
                 <CardImgOverlay>
                 </CardImgOverlay>
                 <CardBody>
