@@ -55,6 +55,7 @@ componentDidMount(){
 
     const DishWithId=({match})=>{
       // const checkDish = match && match.params && match.params.dishId
+      console.log(this.props.comments.comments)
       return(
         <Dishdetail dish={this.props.dishes.dishes.filter((dish)=> dish.id=== parseInt(match.params.dishId,10))[0]}
         isLoading={this.props.dishes.isLoading}
@@ -65,7 +66,6 @@ componentDidMount(){
       />
       )
       }
-    
     return (
       <div className='App'>
         <Header />

@@ -32,7 +32,7 @@ export const addDishes=(dishes)=>({
 export const fetchComments= () => (dispatch)=>{
    return fetch(baseUrl+"comments")
    .then(response=>response.json())
-   .then(comments=>dispatch(addComment(comments)))
+   .then(comments=>dispatch(addComments(comments)))
 }
 export const commentsFailed=(errmess)=>({
     type:ActionTypes.COMMENTS_FAILED,
@@ -59,3 +59,16 @@ export const addPromos=(promos)=>({
     type: ActionTypes.ADD_PROMOS,
     payload: promos,
 });
+// export const fetchLeaders=()=>(dispatch)=>{
+//     dispatch(leadersLoading(true));
+//    return fetch(baseUrl+"leaders")
+//    .then(response=>response.json())
+// }
+// export const leadersLoading=()=>({
+//     type:ActionTypes.LEADERS_LOADING,
+// })
+// export const leadersFailed=(errmess)=>({
+//     type:ActionTypes.DISHES_FAILED,
+//     payload:errmess
+// });
+
