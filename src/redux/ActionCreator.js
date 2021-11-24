@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import { DISHES } from '../share/dishes';
 import { baseUrl } from '../share/baseUrl';
 
 
