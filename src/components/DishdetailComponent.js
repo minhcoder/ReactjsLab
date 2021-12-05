@@ -11,30 +11,33 @@ class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isCommentFormModalOpen: false
+            isNavOpen: false,
+            isModalOpen:false,
         };
-        this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this);
-        this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this);
+        this.toggleModal=this.toggleModal.bind(this);
+        this.handleSubmit=this.handleSubmit.bind(this);
+
     }
-    handleCommentFormSubmit(values) {
-        console.log("Current State is: " + JSON.stringify(values));
-        alert("Current State is: " + JSON.stringify(values));
+    handleSubmit(values) {
+        this.toggleModal();
+        this.props.addComment(this.props.dishId,values.rating,values.rating,values.author,values.comment)
     }
-    toggleCommentFormModal() {
+    toggleModal(){
         this.setState({
-            isCommentFormModalOpen: !this.state.isCommentFormModalOpen
+            isModalOpen:!this.state.isModalOpen,
         });
     }
+    
     render() {
         return (
             <React.Fragment>
-                <Button outline onClick={this.toggleCommentFormModal}>
+                <Button outline onClick={this.toggleModal}>
                     <span className="fa fa-comments fa-lg"></span> Submit Comment
                 </Button>
-                <Modal isOpen={this.state.isCommentFormModalOpen} toggle={this.toggleCommentFormModal} >
-                    <ModalHeader toggle={this.toggleCommentFormModal}> Submit Comment </ModalHeader>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+                    <ModalHeader toggle={this.toggleModal}> Submit Comment </ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={(values) => this.handleCommentFormSubmit(values)}>
+                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="rating" md={12} >Rating</Label>
                                 <Col md={12}>
@@ -138,7 +141,7 @@ class CommentForm extends Component {
             );
         }
     }
-    function RenderComments({dish,comments}){
+    function RenderComments({dishId,addComment,comments}){
         if (comments == null) {
             return (<div></div>)
         }
@@ -163,7 +166,8 @@ class CommentForm extends Component {
                 <ul className='list-unstyled'>
                     {cmnts}
                 </ul>
-                <CommentForm dish={dish} comments={comments} />
+                <CommentForm dishId={dishId} addComment={addComment} 
+                />
             </div>
         )
     }
@@ -191,7 +195,9 @@ class CommentForm extends Component {
                 </div>
                 <div className='row'>
                     <RenderDish dish={ props.dish } />
-                    <RenderComments dish={props.dish} comments={ props.comments } />
+                    <RenderComments dish={props.dish} comments={ props.comments } 
+                    addComment={props.addComment}
+                    dishId={props.dish.id}/>
                 </div>
             </div>
         )
