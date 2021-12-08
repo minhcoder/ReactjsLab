@@ -6,6 +6,7 @@ import {Button, Modal, ModalBody, ModalHeader, Label, Row, Col} from "reactstrap
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from "../shared/baseUrl";
+// import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 const required = (val) => val && val.length; //value > 0
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -127,6 +128,7 @@ class CommentForm extends Component {
     function RenderDish({dish}) {
         if (dish != null) {
             return (
+                <FadeTransform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)' }}>
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
                         <CardImg width="100%" src={baseUrl+ dish.image} alt={dish.name} />
@@ -136,6 +138,7 @@ class CommentForm extends Component {
                         </CardBody>
                     </Card>
                 </div>   
+                </FadeTransform>
             );
         }
         else {
