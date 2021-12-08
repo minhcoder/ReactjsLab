@@ -6,7 +6,7 @@ import {Button, Modal, ModalBody, ModalHeader, Label, Row, Col} from "reactstrap
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from "../shared/baseUrl";
-// import {FadeTransform, Fade, Stagger} from 'react-animation-components';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 const required = (val) => val && val.length; //value > 0
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -151,8 +151,12 @@ class CommentForm extends Component {
         if (comments == null) {
             return (<div></div>)
         }
-        const cmnts = comments.map(comment => {
-            return (               
+        <div className='col-12 col-md-5 m-1'>
+                <h4> Comments </h4>
+        <ul className='list-unstyled'>
+        <Stagger in>{comments.map((comment) => {
+            return ( 
+                <Fade in>              
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
                     <p>-- {comment.author},
@@ -164,18 +168,13 @@ class CommentForm extends Component {
                     }).format(new Date(comment.date))}
                     </p>
                 </li>
-            )
-        })
-        return (
-            <div className='col-12 col-md-5 m-1'>
-                <h4> Comments </h4>
-                <ul className='list-unstyled'>
-                    {cmnts}
-                </ul>
-                <CommentForm dishId={dishId} postComment={postComment} 
-                />
-            </div>
-        )
+                </Fade>
+            );
+        })}
+        </Stagger>
+        </ul>
+        <CommentForm dishId={dishId} postComment={postComment} />
+        </div>
     }
     const DishDetail = (props) => {
         if (props.isLoading) {
