@@ -17,8 +17,6 @@ function RenderLeader({ leader }) {
         </div>
     );
 }
-
-
 function About(props) {
 
     const leaders = props.leaders.map((leader) => {
@@ -26,7 +24,6 @@ function About(props) {
             <RenderLeader leader={leader} />            
         );
     });
-
     return (
         <div className="container">
             <div className="row">
@@ -77,8 +74,6 @@ function About(props) {
                     </Card>
                 </div>
             </div>
-
-
             <div className="row row-content">
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
@@ -95,5 +90,4 @@ function About(props) {
         </div>
     );
 }
-
 export default About;    
